@@ -105,6 +105,10 @@ function App() {
     function changeTaskTitle(todoListID: string, id: string, title: string) {
         setTasks({...tasks, [todoListID]: tasks[todoListID].map((t) => t.id === id ? {...t, title} : t)});
     }
+    function changeTodolistTitle(todoListID: string, title: string) {
+        setTodoLists(todoLists.map((tl) => tl.id === todoListID ? {...tl, title } : tl));
+    }
+
 
 
     const todoListComponents = todoLists.length ? todoLists.map((tl =>   {
@@ -122,6 +126,7 @@ function App() {
 
                           removeTodoList={removeTodoList}
                           changeTaskTitle={changeTaskTitle}
+                          changeTodolistTitle={changeTodolistTitle}
                 />
             )
         }))
