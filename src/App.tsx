@@ -8,19 +8,19 @@ import {Menu} from '@material-ui/icons';
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 
-type TodoListType = {
+export type TodoListType = {
     id: string
     title: string
     filter: FilterValuesType
 }
 
-type TaskType = {
+export type TaskType = {
     id: string
     title: string
     isDone: boolean
 }
 
-type TasksStateType = {
+export type TasksStateType = {
     [todoListID: string]: Array<TaskType>
 }
 
@@ -29,7 +29,6 @@ function App() {
     const todoListID_1 = v1();
     const todoListID_2 = v1();
 
-    // Чтобы использовать методы массивов [{}, {}, {}]
     const [todoLists, setTodoLists] = useState<Array<TodoListType>>([
         {id: todoListID_1, title: 'What to learn', filter: 'all'},
         {id: todoListID_2, title: 'What to buy', filter: 'all'}
@@ -52,20 +51,16 @@ function App() {
     });
     //
 
-    // Из какого удалить, в какой добавить, какой фильтровать?
-    // Добавить todoListID: string
-
     function removeTask(tasksID: string, todoListID: string) {
         setTasks({...tasks, [todoListID]: tasks[todoListID].filter(t => t.id !== tasksID)});
     }
+    function addTask(title: string, todoListID: string) {
+        const task = {
+            id: v1(), title: title, isDone: false
+        };
 
-    function changeFilter(value: FilterValuesType, todoListID: string) {
-        const changeFilterTodolist = todoLists.map(
-            (t) => t.id === todoListID ? {...t, filter: value} : t
-        )
-        setTodoLists(changeFilterTodolist);
+        setTasks({...tasks, [todoListID]: [task, ...tasks[todoListID]]});
     }
-
     function changeStatus(taskId: string, isDone: boolean, todoListID: string) {
 
         const changeTasksArray = tasks[todoListID].map(
@@ -76,20 +71,15 @@ function App() {
 
         setTasks({...tasks, [todoListID]: changeTasksArray});
     }
-
-    function addTask(title: string, todoListID: string) {
-        const task = {
-            id: v1(), title: title, isDone: false
-        };
-
-        setTasks({...tasks, [todoListID]: [task, ...tasks[todoListID]]});
+    function changeTaskTitle(todoListID: string, id: string, title: string) {
+        setTasks({...tasks, [todoListID]: tasks[todoListID].map((t) => t.id === id ? {...t, title} : t)});
     }
+
 
     function removeTodoList(todoListID: string) {
         setTodoLists(todoLists.filter(tl => tl.id !== todoListID))
         delete tasks[todoListID]
     }
-
     function addTodolist(title: string) {
         const newTodoListID = v1()
         const newTodoList: TodoListType = {
@@ -100,15 +90,15 @@ function App() {
         setTodoLists([...todoLists, newTodoList])
         setTasks({...tasks, [newTodoListID]: []})
     }
-
-    function changeTaskTitle(todoListID: string, id: string, title: string) {
-        setTasks({...tasks, [todoListID]: tasks[todoListID].map((t) => t.id === id ? {...t, title} : t)});
+    function changeFilter(value: FilterValuesType, todoListID: string) {
+        const changeFilterTodolist = todoLists.map(
+            (t) => t.id === todoListID ? {...t, filter: value} : t
+        )
+        setTodoLists(changeFilterTodolist);
     }
-
     function changeTodolistTitle(todoListID: string, title: string) {
-        setTodoLists(todoLists.map((tl) => tl.id === todoListID ? {...tl, title} : tl));
+        setTodoLists(todoLists.map((tl) => tl.id === todoListID ? {...tl, title} : tl))
     }
-
 
     const todoListComponents = todoLists.length ? todoLists.map((tl => {
             return (
@@ -137,7 +127,6 @@ function App() {
 
     return (
         <div className="App">
-
             <AppBar position="static">
                 <Toolbar style={{justifyContent: 'space-between'}}>
                     <IconButton edge="start" color="inherit" aria-label="menu">
