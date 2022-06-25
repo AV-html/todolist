@@ -1,4 +1,5 @@
 import {TasksStateType} from '../App';
+import {ADD_TODOLIST, AddTodolistAT, REMOVE_TODOLIST, RemoveTodolistAT} from './todolist-reducer';
 
 
 export const REMOVE_TASK = 'REMOVE_TASK'
@@ -6,7 +7,7 @@ export const ADD_TASK = 'ADD_TASK'
 export const CHANGE_TASK_STATUS = 'CHANGE-TASK-STATUS'
 export const CHANGE_TASK_TITLE = 'CHANGE-TASK-TITLE';
 
-export type TasksActionType = RemoveTaskAT | AddTaskAT | ChangeTaskStatusAT | ChangeTaskTitleAT
+export type TasksActionType = RemoveTaskAT | AddTaskAT | ChangeTaskStatusAT | ChangeTaskTitleAT | AddTodolistAT | RemoveTodolistAT
 
 export type RemoveTaskAT = ReturnType<typeof removeTaskAC>
 export type AddTaskAT = ReturnType<typeof addTaskAC>
@@ -49,7 +50,20 @@ export const tasksReducer = (tasks: TasksStateType, action: TasksActionType): Ta
                 } : task)
             }
         }
+        case ADD_TODOLIST: {
+            return {
+                ...tasks,
+                [action.todolistID]: []
+            }
+        }
+        case REMOVE_TODOLIST: {
+            const copyTasks = {...tasks};
+            delete copyTasks[action.todolistID]
+            return copyTasks
 
+            // const {[action.todolistID]: [], ...rest} = {...tasks}
+            // return rest
+        }
         default:
             return tasks;
     }
