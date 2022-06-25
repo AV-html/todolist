@@ -26,14 +26,14 @@ export type ChangeTodolistTitleAT = {
 }
 
 
-export type ActionType =
+export type TodolistActionType =
     RemoveTodolistAT |
     AddTodolistAT |
     ChangeTodolistFilterAT |
     ChangeTodolistTitleAT
 
 
-export const todolistReducer = (todolists: Array<TodoListType>, action: ActionType): Array<TodoListType> => {
+export const todolistReducer = (todolists: Array<TodoListType>, action: TodolistActionType): Array<TodoListType> => {
 
     switch (action.type) {
         case REMOVE_TODOLIST:
