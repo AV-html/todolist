@@ -1,5 +1,6 @@
 import {TasksStateType} from '../App';
 import {ADD_TODOLIST, AddTodolistAT, REMOVE_TODOLIST, RemoveTodolistAT} from './todolist-reducer';
+import {v1} from 'uuid';
 
 
 export const REMOVE_TASK = 'REMOVE_TASK'
@@ -76,10 +77,10 @@ export const removeTaskAC = (todolistID: string, taskID: string) => ({
     taskID,
 } as const)
 
-export const addTaskAC = (todolistID: string, taskID: string, title: string) => ({
+export const addTaskAC = (todolistID: string, title: string) => ({
     type: ADD_TASK,
     todolistID,
-    taskID,
+    taskID: v1(),
     title,
 } as const)
 
