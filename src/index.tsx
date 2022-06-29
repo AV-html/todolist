@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+import AppUseReducer from './AppUseReducer';
 
-ReactDOM.render(<App />,  document.getElementById('root'));
+ReactDOM.render(<AppUseReducer />,  document.getElementById('root'));
 
 
 serviceWorker.unregister();
