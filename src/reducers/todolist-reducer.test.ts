@@ -1,5 +1,4 @@
 import {v1} from 'uuid';
-import {FilterValuesType, TodoListType} from '../App';
 import {
     addTodolistAC,
     changeTodolistFilterAC,
@@ -7,6 +6,15 @@ import {
     removeTodolistAC,
     todolistReducer
 } from './todolist-reducer';
+
+
+export type FilterValuesType = 'all' | 'active' | 'completed';
+
+export type TodoListType = {
+    id: string
+    title: string
+    filter: FilterValuesType
+}
 
 
 let todolistId1: string;
